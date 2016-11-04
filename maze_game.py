@@ -114,7 +114,7 @@ class MazeGame(object):
         col = random.randint(0, self.field_width - 1)
         row = random.randint(0, self.field_height - 1)
         self.mz[row][col].visit()
-        print("Starting point: ", (row, col))
+        #print("Starting point: ", (row, col))
         # propagate
         front = self.RoomSet()
         front = self.addToFront(front, (row, col))

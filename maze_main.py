@@ -100,5 +100,5 @@ root = tk.Tk() # root.destroy() needs this
 app = Application()
 app.master.title('Sokkelo - Maze')
 app.mainloop()
-print("Game over")
+#print("Game over")
 root.destroy() # some IDEs need this
