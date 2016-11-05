@@ -84,7 +84,9 @@ class Application(tk.Frame):
             return
         else:
             return
+        # Player's move
         if self.game.move(mv):
+            # Solved - exit the program
             self.stopGame()
             
     def playGame(self):

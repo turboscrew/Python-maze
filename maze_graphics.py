@@ -1,6 +1,7 @@
 import tkinter as tk
-import time
+# This knows about pixels
 
+# Some colours
 BGC = '#ff0ff0ff0'
 FGC = '#000000000'
 WKC = '#000fc0fc0'
@@ -11,14 +12,17 @@ BBB = '#000000fff'
 XXX = '#0ff0ff000'
 LGB = '#8f08f0fff'
 
+# Room size
 ROOM_HEIGHT_IN_PIX = 16
 ROOM_WIDTH_IN_PIX = 16
 
+# Wall-IDs
 U_WALL = 1
 R_WALL = 2
 D_WALL = 4
 L_WALL = 8
 
+# Maze 'margins'
 x_offset = 16
 y_offset = 16
 
@@ -26,9 +30,11 @@ class MazeGraphics(object):
     DEBUG = 0
     roomheight = ROOM_HEIGHT_IN_PIX
     roomwidth = ROOM_WIDTH_IN_PIX
-    walker = (0, 0)
-    mz = []
+    walker = (0, 0) # The maze-walker
+    mz = [] # The maze representation
+    
     class Room(object):
+        # Maze room
         def __init__(self, field, loc, width, height):
             self.field = field
             # corner points and center point
@@ -70,6 +76,7 @@ class MazeGraphics(object):
             self.field.itemconfigure(self.wlk, fill=LGB)
 
         def markVisited(self):
+            # for debugging
             self.field.itemconfigure(self.wlk, fill=VSC)
             
         def breakWall(self, wall):
@@ -94,6 +101,7 @@ class MazeGraphics(object):
         self.field = field
         self.width = y
         self.height = x
+        # build the maze array of rooms
         for i in range(0, x):
             self.mz.append([])
             for j in range(0, y):
@@ -102,6 +110,7 @@ class MazeGraphics(object):
                 self.mz[i].append(rm)
 
     def clear(self):
+        # reset the maze to init state
         x, y = self.walker
         self.mz[x][y].clearWalker()
         self.walker = (0,0)
@@ -110,12 +119,14 @@ class MazeGraphics(object):
                 self.mz[i][j].clear()
 
     def breakWall(self, x, y, w):
+        # Make the entry and exit places
         if w == 'U':
             self.mz[x][y].breakWall(U_WALL)
         else:
             self.mz[x][y].breakWall(D_WALL)
             
     def connectRooms(self, x, y, x1, y1):
+        # Break the walls between two rooms
         if x == x1:
             if y < y1:
                 if self.DEBUG != 0:
@@ -151,9 +162,11 @@ class MazeGraphics(object):
         self.mz[i][j].clearWalker()
         
     def setGoal(self, i, j):
+        # Make exit place more visible
         self.mz[i][j].markCell(RRR)
 
     def setWalker(self, i, j):
+        # Move walker from a room to another
         x, y = self.walker
         #print("graph: walker = ", self.walker, " to ", (i ,j))
         self.mz[x][y].clearWalker()
@@ -161,6 +174,7 @@ class MazeGraphics(object):
         self.walker = (i, j)
         
     def moveWalker(self, i, j):
+        # Move walker from a room to another leaving a trace
         x, y = self.walker
         #print("graph: walker = ", self.walker, " to ", (i ,j))
         #self.mz[x][y].clearWalker()
